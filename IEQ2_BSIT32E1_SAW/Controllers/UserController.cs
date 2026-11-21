@@ -11,35 +11,53 @@ namespace IEQ2_BSIT32E1_SAW.Controllers
     {
         // GET: api/<UserController>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            var users = new List<GetUserResponse>();
+            return Ok(users);
         }
 
         // GET api/<UserController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public IActionResult Get(int id)
         {
-            return "value";
+            var value = new GetUserByIdResponse
+            {
+                Id = id
+            };
+
+            return Ok(value);
         }
 
         // POST api/<UserController>
         [HttpPost]
         public IActionResult Post([FromBody] CreateUserRequest value)
         {
-            return Ok(value);
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return CreatedAtAction(nameof(Get), new { id = 1 }, value);
         }
 
         // PUT api/<UserController>/5
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] EditUserRequest value)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(value);
         }
 
         // DELETE api/<UserController>/5
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            return NoContent();
         }
     }
 }
