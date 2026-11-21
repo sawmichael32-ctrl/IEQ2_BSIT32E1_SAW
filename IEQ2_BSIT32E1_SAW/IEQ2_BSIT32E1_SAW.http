@@ -1,0 +1,6 @@
+@IEQ2_BSIT32E1_SAW_HostAddress = http://localhost:5124
+
+GET {{IEQ2_BSIT32E1_SAW_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
